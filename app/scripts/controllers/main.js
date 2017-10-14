@@ -9,9 +9,22 @@
  */
 angular.module('doctorFinderApp')
   .controller('MainCtrl', function () {
-    this.awesomeThings = [
+    var vm = this;
+
+    vm.myDate = '';
+
+    vm.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
+
+    console.log('Picked Date');
+
+    vm.showDate = function () {
+      console.log('Picked Date');
+      console.log(vm.myDate);
+    };
+
+
   });
