@@ -10,17 +10,32 @@
   <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
 </div>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
 
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
+  <input ng-model="user.title">
 
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+  <md-button class="md-primary md-raised demo-dialog-open-button"
+             ng-click="ctrl.showDialog($event)">Search
+  </md-button>
+
+  <p>Occupation:</p>
+
+  <input type="checkbox" ng-checked="exists(item, selected)"
+         ng-click="toggle(item, selected)"/> Deu
+
+  <input type="checkbox" ng-checked="exists(item, selected)"
+         ng-click="toggle(item, selected)"/> Psy
+
+  <input type="checkbox" ng-checked="exists(item, selected)"
+         ng-click="toggle(item, selected)"/> Phys
+
+  <p></p>
+  <p>Location Approximity:</p>
+  <md-radio-group
+    style="padding-left: 30px">
+    <md-radio-button value="top">1k</md-radio-button>
+    <md-radio-button value="right">2k</md-radio-button>
+    <md-radio-button value="bottom">3k</md-radio-button>
+    <md-radio-button value="left">4k</md-radio-button>
+  </md-radio-group>
+
 </div>
