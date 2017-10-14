@@ -43,6 +43,9 @@ angular.module('doctorFinderApp')
       return list.indexOf(item) > -1;
     };
 
+    vm.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+
+
     // vm.isIndeterminate = function() {
     //   return (vm.selected.length !== 0 &&
     //     vm.selected.length !== vm.items.length);
