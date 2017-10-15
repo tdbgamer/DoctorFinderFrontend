@@ -11,11 +11,16 @@ angular.module('doctorFinderApp')
   .controller('MainCtrl', function ($scope, $timeout, $mdSidenav, $http) {
     var vm = this;
 
-    vm.occupations = ['psy', 'deu', 'phys'];
+    vm.name = "";
+    vm.city = "";
+    vm.zipcode = "";
+    vm.state = "GA";
+    vm.specialization = "";
     vm.showBarIcon = true;
     vm.toggleBarIcon = function () {
       vm.showBarIcon = !vm.showBarIcon;
     };
+
 
     vm.toggle = function (item, list) {
       var idx = list.indexOf(item);
@@ -26,6 +31,19 @@ angular.module('doctorFinderApp')
         list.push(item);
       }
     };
+
+
+    vm.onSubmit = function() {
+      vm.result = {
+        city: vm.city,
+        zipcode: vm.zipcode,
+        specialization: vm.specialization,
+        name: vm.name
+      }
+      return result;
+    }
+
+
 
     vm.exists = function (item, list) {
       return list.indexOf(item) > -1;
