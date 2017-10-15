@@ -1,1 +1,30 @@
+<div class="jumbotron">
 
+  <input ng-model="user.title">
+
+  <md-button class="md-primary md-raised demo-dialog-open-button"
+             ng-click="ctrl.showDialog($event)">Search
+  </md-button>
+
+  <p>Occupation:</p>
+
+  <input type="checkbox" ng-checked="exists(item, selected)"
+         ng-click="toggle(item, selected)"/> Deu
+
+  <input type="checkbox" ng-checked="exists(item, selected)"
+         ng-click="toggle(item, selected)"/> Psy
+
+  <input type="checkbox" ng-checked="exists(item, selected)"
+         ng-click="toggle(item, selected)"/> Phys
+
+  <p></p>
+  <p>Location Approximity:</p>
+  <md-radio-group
+    style="padding-left: 30px">
+    <md-radio-button value="top">1k</md-radio-button>
+    <md-radio-button value="right">2k</md-radio-button>
+    <md-radio-button value="bottom">3k</md-radio-button>
+    <md-radio-button value="left">4k</md-radio-button>
+  </md-radio-group>
+
+</div>
