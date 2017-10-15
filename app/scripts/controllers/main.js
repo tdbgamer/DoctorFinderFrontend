@@ -8,10 +8,14 @@
  * Controller of the doctorFinderApp
  */
 angular.module('doctorFinderApp')
-  .controller('MainCtrl', function ($scope, $timeout, $mdSidenav) {
+  .controller('MainCtrl', function ($scope, $timeout, $mdSidenav, $http) {
     var vm = this;
 
     vm.occupations = ['psy', 'deu', 'phys'];
+    vm.showBarIcon = true;
+    vm.toggleBarIcon = function () {
+      vm.showBarIcon = !vm.showBarIcon;
+    };
 
     vm.toggle = function (item, list) {
       var idx = list.indexOf(item);
@@ -45,6 +49,20 @@ angular.module('doctorFinderApp')
 
     vm.map = {center: {latitude: 45, longitude: -73}, zoom: 8};
 
+    $http({
+      method: 'GET',
+      url: 'https://doctor-finder-backend.herokuapp.com/doctors',
+      data: {}
+    }).then(function successCallback(response) {
+      console.log(response);
+      // this callback will be called asynchronously
+      // when the response is available
+    }, function errorCallback(response) {
+      console.log('Error doctors');
+      console.log(response);
+      // called asynchronously if an error occurs
+      // or server returns response with an error status.
+    });
 
     // vm.isIndeterminate = function() {
     //   return (vm.selected.length !== 0 &&
@@ -67,11 +85,14 @@ angular.module('doctorFinderApp')
 
 
     vm.toggleLeft = buildToggler('left');
+
+
     vm.toggleRight = buildToggler('right');
 
     function buildToggler(componentId) {
       return function () {
         $mdSidenav(componentId).toggle();
+        vm.toggleBarIcon();
       };
     }
 
