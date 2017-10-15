@@ -31,8 +31,6 @@ angular.module('doctorFinderApp')
         list.push(item);
       }
     };
-
-
     vm.onSubmit = function() {
       vm.result = {
         city: vm.city,
