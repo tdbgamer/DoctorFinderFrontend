@@ -14,15 +14,12 @@
 
       <md-toolbar class="md-theme-indigo">
         <div class="row">
-          <div class="col-md-7">
-          <span class="text-center">
+          <div class="col-md-7" style = "margin: 10px 0px 0px 0px;">
           Doctor Finder
-          </span>
           </div>
           <div class="col-md-5">
             <md-button ng-click="main.toggleLeft()" class="md-active">
               <span class="fa fa-times"></span>
-              Close
             </md-button>
           </div>
         </div>
@@ -34,7 +31,7 @@
         <md-card>
           <md-card-title>
             <md-card-title-text>
-              <span class="md-headline">Select your location</span>
+              <span class="md-headline">Search by</span>
             </md-card-title-text>
           </md-card-title>
 
@@ -42,23 +39,18 @@
           <md-card-content>
             <div layout="row">
               <md-input-container>
-                <label>Street Name</label>
-                <input>
-              </md-input-container>
-
-              <md-input-container>
                 <label>City</label>
-                <input>
+                <input ng-model="main.city">
               </md-input-container>
 
               <md-input-container>
-                <label>State</label>
-                <md-select ng-model="ctrl.userState">
-                  <md-option><em>None</em></md-option>
-                  <md-option ng-repeat="state in ctrl.states" ng-value="state.abbrev" ng-disabled="$index === 1">
-                    {{state.abbrev}}
-                  </md-option>
-                </md-select>
+                <label>Zipcode</label>
+                <input ng-model="main.zipcode">
+              </md-input-container>
+
+              <md-input-container>
+                <label>Specialization</label>
+                <input ng-model="main.specialization">
               </md-input-container>
             </div>
           </md-card-content>
@@ -67,11 +59,11 @@
         <div style="margin-top: 30px;">
           <md-input-container class="md-block" flex-gt-sm style="padding-top: 30px">
             <label>Search Doctor</label>
-            <input ng-model="">
+            <input ng-model="main.name">
           </md-input-container>
         </div>
 
-        <md-button class="md-raised md-primary">Submit</md-button>
+        <md-button ng-click="main.onSubmit()" class="md-raised md-primary">Submit</md-button>
       </md-content>
 
     </md-sidenav>
