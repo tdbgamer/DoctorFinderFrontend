@@ -42,12 +42,13 @@ angular.module('doctorFinderApp')
       vm.result = {
         city: vm.city,
         zipcode: vm.zipcode,
-        specialization: vm.specialization,
+        occupation: vm.specialization,
         name: vm.name
       }
-      vm.getDoctors();
-      return vm.result;
+      vm.getDoctors(vm.result);
     };
+
+
 
     vm.getMarkerLocation = function (data) {
       var array = [];
@@ -85,7 +86,7 @@ angular.module('doctorFinderApp')
       return list.indexOf(item) > -1;
     };
 
-    vm.map = {center: {latitude: 45, longitude: -73}, zoom: 8};
+    vm.map = {center: {latitude: 45, longitude: -73}, zoom: 14};
 
     vm.getDoctorList = function (json) {
       var array = [];
@@ -95,6 +96,7 @@ angular.module('doctorFinderApp')
           array.push({
             n_id: item.id,
             rating: item.ratings,
+            specialization: item.occupation,
             phone: item.addresses[0].phone_number,
             address: item.addresses[0].street_address,
             doctor: item.name
@@ -106,10 +108,12 @@ angular.module('doctorFinderApp')
       return array;
     }
 
-    vm.getDoctors = function () {
+    vm.getDoctors = function (result) {
+      Object.keys(result).forEach((key) => (!result[key]) && delete result[key]);
       $http({
         method: 'GET',
         url: 'https://doctor-finder-backend.herokuapp.com/doctors',
+        params: result,
         data: {}
       }).then(function successCallback(response) {
         console.log(response);
@@ -125,7 +129,6 @@ angular.module('doctorFinderApp')
         // or server returns response with an error status.
       });
 
-
     };
 
     vm.refreshGoogleMap = function (locations) {
@@ -135,7 +138,7 @@ angular.module('doctorFinderApp')
       // google.maps.Marker.setPosition(latlng);
 
       var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 3,
+        zoom: 15,
         center: {lat: locations[2][1], lng: locations[2][2]}
       });
 
@@ -162,9 +165,13 @@ angular.module('doctorFinderApp')
 
     vm.renderRating = function(rating) {
       var result = '';
-      var i;
-      for (i = 0; i < rating.length; i++) {
-        result += 'x';
+      if (rating.length > 0) {
+        var i;
+        for (i = 0; i < rating.length; i++) {
+          result += 'x';
+        }
+      } else {
+        result = 'not available';
       }
       return result;
     }
@@ -204,26 +211,4 @@ angular.module('doctorFinderApp')
 
   });
 
-// angular.module('ngPortalApp')
-//   .directive('googleMap', function () {
-//     return {
-//       template: '<iframe width="100%" height="350" frameborder="0" style="border:0"></iframe>',
-//       restrict: 'E',
-//       scope: {
-//         pbcode: '='
-//       },
-//       link: function postLink(scope, element) {
-//         var mapFrame = element.find("iframe");
-//         if (scope.pbcode) {
-//           mapFrame.attr('src', "https://www.google.com/maps/embed?pb=" + scope.pbcode);
-//         }
-//         else {
-//           mapFrame.attr('src', '');
-//         }
-//       }
-//     };
-//
-//
-//
-//
-//   });
+
