@@ -1,31 +1,83 @@
-<div class="jumbotron">
+<section layout="row" flex>
+
+  <md-sidenav class="md-sidenav-left" md-component-id="left"
+              md-disable-backdrop md-whiteframe="4">
+
+    <md-toolbar class="md-theme-indigo">
+      <div class="row">
+        <div class="col-md-7">
+          <span class="text-center">
+          Doctor Finder
+          </span>
+        </div>
+        <div class="col-md-5">
+          <md-button ng-click="main.toggleLeft()" class="md-active">
+            <span class="fa fa-times"></span>
+            Close
+          </md-button>
+        </div>
+      </div>
+    </md-toolbar>
+
+    <!--Side Nav Content-->
+    <md-content layout-margin>
+
+      <md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Select your location</span>
+          </md-card-title-text>
+        </md-card-title>
 
 
-  <input ng-model="user.title">
+        <md-card-content>
+          <div layout="row">
+            <md-input-container>
+              <label>Street Name</label>
+              <input>
+            </md-input-container>
 
-  <md-button class="md-primary md-raised demo-dialog-open-button"
-             ng-click="ctrl.showDialog($event)">Search
-  </md-button>
+            <md-input-container>
+              <label>City</label>
+              <input>
+            </md-input-container>
 
-  <p>Occupation:</p>
+            <md-input-container>
+              <label>State</label>
+              <md-select ng-model="ctrl.userState">
+                <md-option><em>None</em></md-option>
+                <md-option ng-repeat="state in ctrl.states" ng-value="state.abbrev" ng-disabled="$index === 1">
+                  {{state.abbrev}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+        </md-card-content>
+      </md-card>
 
-  <input type="checkbox" ng-checked="exists(item, selected)"
-         ng-click="toggle(item, selected)"/> Deu
+      <div style="margin-top: 30px;">
+        <md-input-container class="md-block" flex-gt-sm style="padding-top: 30px">
+          <label>Search Doctor</label>
+          <input ng-model="">
+        </md-input-container>
+      </div>
 
-  <input type="checkbox" ng-checked="exists(item, selected)"
-         ng-click="toggle(item, selected)"/> Psy
+      <md-button class="md-raised md-primary">Submit</md-button>
+    </md-content>
 
-  <input type="checkbox" ng-checked="exists(item, selected)"
-         ng-click="toggle(item, selected)"/> Phys
+  </md-sidenav>
 
-  <p></p>
-  <p>Location Approximity:</p>
-  <md-radio-group
-    style="padding-left: 30px">
-    <md-radio-button value="top">1k</md-radio-button>
-    <md-radio-button value="right">2k</md-radio-button>
-    <md-radio-button value="bottom">3k</md-radio-button>
-    <md-radio-button value="left">4k</md-radio-button>
-  </md-radio-group>
+  <md-content flex layout-padding>
 
-</div>
+    <div layout="column" layout-align="top left">
+      <div>
+        <md-button ng-click="main.toggleLeft()" class="md-raised">
+          <span class="fa fa-bars" style=""></span>
+        </md-button>
+      </div>
+
+    </div>
+
+  </md-content>
+
+</section>
