@@ -72,6 +72,26 @@
         </div>
 
         <md-button class="md-raised md-primary">Submit</md-button>
+
+
+        <!--Card for Doctors list-->
+        <md-card md-theme="{{ 'default' }}" md-theme-watch>
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline">Doctors Name</span>
+              <span class="md-subhead">Rating</span>
+              <span class="md-subhead">Phone #</span>
+              <span class="md-subhead">Address</span>
+            </md-card-title-text>
+            <md-card-title-media>
+              <div class="md-media-sm card-media"></div>
+            </md-card-title-media>
+          </md-card-title>
+          <!--<md-card-actions layout="row" layout-align="end center">-->
+            <!--<md-button>Direction</md-button>-->
+            <!--<md-button>Call</md-button>-->
+          <!--</md-card-actions>-->
+        </md-card>
       </md-content>
 
     </md-sidenav>
@@ -79,3 +99,4 @@
   </section>
 </div>
 
+<ui-gmap-google-map center='main.map.center' zoom='main.map.zoom'></ui-gmap-google-map>

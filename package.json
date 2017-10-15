@@ -41,6 +41,7 @@
     "test": "karma start test\\karma.conf.js"
   },
   "dependencies": {
-    "angular-google-maps": "^2.4.1"
+    "angular-google-maps": "^2.3.2",
+    "lodash": "^4.17.4"
   }
 }
