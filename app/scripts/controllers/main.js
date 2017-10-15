@@ -31,16 +31,34 @@ angular.module('doctorFinderApp')
         list.push(item);
       }
     };
-    vm.onSubmit = function() {
+
+    vm.onSubmit = function () {
       vm.result = {
         city: vm.city,
         zipcode: vm.zipcode,
         specialization: vm.specialization,
         name: vm.name
       }
+      vm.getDoctors();
       return vm.result;
-    }
+    };
 
+    vm.getMarkerLocation = function (data) {
+      var array = [];
+
+      data.forEach(function (element, index) {
+        array.push([
+          element.name,
+          element.addresses[0].long,
+          element.addresses[0].lat,
+          index
+        ]);
+      });
+
+      console.log(array);
+
+      return array;
+    }
 
 
     vm.exists = function (item, list) {
@@ -65,20 +83,58 @@ angular.module('doctorFinderApp')
 
     vm.map = {center: {latitude: 45, longitude: -73}, zoom: 8};
 
-    $http({
-      method: 'GET',
-      url: 'https://doctor-finder-backend.herokuapp.com/doctors',
-      data: {}
-    }).then(function successCallback(response) {
-      console.log(response);
-      // this callback will be called asynchronously
-      // when the response is available
-    }, function errorCallback(response) {
-      console.log('Error doctors');
-      console.log(response);
-      // called asynchronously if an error occurs
-      // or server returns response with an error status.
-    });
+
+    vm.getDoctors = function () {
+      $http({
+        method: 'GET',
+        url: 'https://doctor-finder-backend.herokuapp.com/doctors',
+        data: {}
+      }).then(function successCallback(response) {
+        console.log(response);
+        var resultlLocation = vm.getMarkerLocation(response.data);
+        vm.refreshGoogleMap(resultlLocation);
+        // this callback will be called asynchronously
+        // when the response is available
+      }, function errorCallback(response) {
+        console.log('Error doctors');
+        console.log(response);
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+      });
+
+
+    };
+
+    vm.refreshGoogleMap = function (locations) {
+      console.log("refresh Map");
+      console.log(locations);
+      // var latlng = new google.maps.LatLng(-24.397, 140.644);
+      // google.maps.Marker.setPosition(latlng);
+
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 3,
+        center: {lat: -28.024, lng: 140.887}
+      });
+
+      // Create an array of alphabetical characters used to label the markers.
+      var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+      // Add some markers to the map.
+      // Note: The code uses the JavaScript Array.prototype.map() method to
+      // create an array of markers based on a given "locations" array.
+      // The map() method here has nothing to do with the Google Maps API.
+      var markers = locations.map(function (location, i) {
+        return new google.maps.Marker({
+          position: location,
+          label: labels[i % labels.length]
+        });
+      });
+
+      // Add a marker clusterer to manage the markers.
+      var markerCluster = new MarkerClusterer(map, markers,
+        {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+    };
+
 
     // vm.isIndeterminate = function() {
     //   return (vm.selected.length !== 0 &&
