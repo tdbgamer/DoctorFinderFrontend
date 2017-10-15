@@ -67,17 +67,22 @@
         </div>
 
         <md-button ng-click="main.onSubmit()" class="md-raised md-primary">Submit</md-button>
-        <md-button class="md-raised md-primary">Cancel</md-button>
+        <md-button ng-click="main.onCancel()" class="md-raised md-primary">Cancel</md-button>
 
 
         <!--Card for Doctors list-->
-        <md-card md-theme="{{ 'default' }}" md-theme-watch>
+        <md-card md-theme="{{ 'default' }}" md-theme-watch ng-repeat="doctor in main.doctorList">
           <md-card-title>
+            <!--address : "1543 Professional Pkwy↵Auburn, AL 36830"-->
+<!--doctor : "Gabriel Martinez"-->
+<!--n_id : 1-->
+<!--phone : 3457896386-->
+<!--rating : []-->
             <md-card-title-text>
-              <span class="md-headline">Doctors Name</span>
-              <span class="md-subhead">Rating</span>
-              <span class="md-subhead">Phone #</span>
-              <span class="md-subhead">Address</span>
+              <span class="md-headline">{{doctor.doctor}}</span>
+              <span class="md-subhead">Rating: {{vm.renderRating()}}</span>
+              <span class="md-subhead">{{doctor.phone}}</span>
+              <span class="md-subhead">{{doctor.address}}</span>
             </md-card-title-text>
             <md-card-title-media>
               <div class="md-media-sm card-media"></div>

@@ -17,6 +17,8 @@ angular.module('doctorFinderApp')
     vm.state = "GA";
     vm.specialization = "";
     vm.showBarIcon = true;
+    vm.doctorList = [];
+
     vm.toggleBarIcon = function () {
       vm.showBarIcon = !vm.showBarIcon;
     };
@@ -31,6 +33,10 @@ angular.module('doctorFinderApp')
         list.push(item);
       }
     };
+
+    vm.onCancel = function () {
+      vm.doctorList = [];
+    }
 
     vm.onSubmit = function () {
       vm.result = {
@@ -54,8 +60,6 @@ angular.module('doctorFinderApp')
           index
         ]);
       });
-
-      console.log(array);
 
       return array;
     }
@@ -83,6 +87,24 @@ angular.module('doctorFinderApp')
 
     vm.map = {center: {latitude: 45, longitude: -73}, zoom: 8};
 
+    vm.getDoctorList = function (json) {
+      var array = [];
+      for (var key in json) {
+        if (json.hasOwnProperty(key)) {
+          var item = json[key];
+          array.push({
+            n_id: item.id,
+            rating: item.ratings,
+            phone: item.addresses[0].phone_number,
+            address: item.addresses[0].street_address,
+            doctor: item.name
+          });
+        }
+      }
+
+      console.log(array);
+      return array;
+    }
 
     vm.getDoctors = function () {
       $http({
@@ -92,6 +114,7 @@ angular.module('doctorFinderApp')
       }).then(function successCallback(response) {
         console.log(response);
         var resultlLocation = vm.getMarkerLocation(response.data);
+        vm.doctorList = vm.getDoctorList(response.data);
         vm.refreshGoogleMap(resultlLocation);
         // this callback will be called asynchronously
         // when the response is available
@@ -113,7 +136,7 @@ angular.module('doctorFinderApp')
 
       var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 3,
-        center: {lat: -28.024, lng: 140.887}
+        center: {lat: locations[2][1], lng: locations[2][2]}
       });
 
       // Create an array of alphabetical characters used to label the markers.
@@ -125,7 +148,7 @@ angular.module('doctorFinderApp')
       // The map() method here has nothing to do with the Google Maps API.
       var markers = locations.map(function (location, i) {
         return new google.maps.Marker({
-          position: location,
+          position: {lat: location[1], lng: location[2]},
           label: labels[i % labels.length]
         });
       });
@@ -133,7 +156,18 @@ angular.module('doctorFinderApp')
       // Add a marker clusterer to manage the markers.
       var markerCluster = new MarkerClusterer(map, markers,
         {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
+      var locations = locations;
     };
+
+    vm.renderRating = function(rating) {
+      var result = '';
+      var i;
+      for (i = 0; i < rating.length; i++) {
+        result += 'x';
+      }
+      return result;
+    }
 
 
     // vm.isIndeterminate = function() {
