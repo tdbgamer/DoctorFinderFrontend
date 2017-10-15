@@ -38,7 +38,7 @@ angular.module('doctorFinderApp')
         specialization: vm.specialization,
         name: vm.name
       }
-      return result;
+      return vm.result;
     }
 
 
